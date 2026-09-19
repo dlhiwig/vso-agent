@@ -399,7 +399,7 @@ def render_narrative(case: Case) -> str:
             if not _unknown(cond.current_impact)
             else "[how this affects work and daily life — UNKNOWN]"
         )
-        lines.append(f"I first noticed this {onset}. During service, {event}. Now, {impact}.")
+        lines.append(f"Onset: {onset}. In service: {event}. Now: {impact}.")
         if cond.secondary_to:
             lines.append(f"I believe this may be related to {cond.secondary_to}. That relationship is for medical and VSO review, not a conclusion of this draft.")
         lines.append("")
