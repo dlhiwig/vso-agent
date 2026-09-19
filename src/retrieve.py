@@ -38,6 +38,8 @@ ALLOWED_HOSTS = {
     "vfw.org",
     "www.govinfo.gov",
     "govinfo.gov",
+    "www.publichealth.va.gov",
+    "publichealth.va.gov",
 }
 
 USER_AGENT = "vso-agent-retriever/0.1 (+https://github.com/dlhiwig/vso-agent)"
