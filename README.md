@@ -13,6 +13,7 @@ Help VSOs at VFW posts:
 - Intake a veteran conversation and produce a structured case brief
 - Map stated issues to common benefit pathways (compensation, pension, DIC, healthcare enrollment, education, home loan, burial)
 - Assemble a review packet: cover sheet, evidence index, condition sheets, draft narrative
+- Retrieve public VA / 38 CFR / VFW excerpts with official URLs
 - Hand that packet to the accredited VSO for review and official filing
 
 ## Packet assembler
@@ -26,11 +27,19 @@ pip install -r requirements.txt
 python -m src.cli assemble examples/sample-case.json -o examples/packets/sample-packet.md
 ```
 
-Input: `examples/sample-case.json`  
-Output: cover sheet + numbered evidence index + per-condition sheets + 21-4138-style draft narrative + VSO handoff.
-
 Rendered sample: [examples/packets/sample-packet.md](examples/packets/sample-packet.md)  
 How it works: [docs/packet-assembler.md](docs/packet-assembler.md)
+
+## Public-source retrieval
+
+```bash
+python -m src.cli retrieve "tinnitus hearing loss artillery MOS"
+python -m src.cli assemble examples/sample-case.json --cite
+```
+
+Curated snapshots live in `corpus/snapshots/`. Official URLs are recorded even when the readable reprint is LII. Live refresh is allowlisted and optional (`python -m src.cli refresh-corpus`).
+
+See [docs/retrieval.md](docs/retrieval.md) and [examples/retrieval-tinnitus.md](examples/retrieval-tinnitus.md).
 
 The assembler does not fill official VA PDFs and does not submit to VA.gov, VBMS, or QuickSubmit. Every packet is headed `DRAFT — VSO REVIEW REQUIRED`.
 
@@ -51,9 +60,11 @@ Find VFW National Veterans Service: [vfw.org](https://www.vfw.org/).
 ```
 agents/           system prompt
 src/packet.py     cover sheet / index / narrative assembler
-src/cli.py        chat + assemble commands
-docs/             operating model and packet notes
-examples/         synthetic case JSON and rendered packet
+src/retrieve.py   public-source search
+src/cli.py        chat + assemble + retrieve
+docs/             operating model, packet, retrieval
+corpus/           public VA/CFR/VFW snapshots + manifest
+examples/         synthetic case JSON, packet, retrieval sample
 ```
 
 ## Chat copilot (optional)
@@ -67,9 +78,9 @@ Point `VSO_AGENT_MODEL` at a local Ollama model or any OpenAI-compatible endpoin
 
 ## Next
 
-1. Retrieval over public VA policy sources (38 CFR excerpts, M21-1 public pages, VA benefit fact sheets).
-2. OpenClaw / MCP adapter so post VSOs can run this beside existing agent stacks.
-3. Post-level playbook: appointment prep, volunteer VSO checklist, handoff to Department Service Officer.
+1. OpenClaw / MCP adapter so post VSOs can run this beside existing agent stacks.
+2. Post-level playbook: appointment prep, volunteer VSO checklist, handoff to Department Service Officer.
+3. Grow the corpus (more M21-1 public articles, 38 CFR musculoskeletal, PACT Act fact sheets).
 
 ## License
 

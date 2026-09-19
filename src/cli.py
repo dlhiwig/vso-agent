@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""VSO Agent CLI — chat copilot and packet assembler."""
+"""VSO Agent CLI — chat, packet assembler, public-source retrieval."""
 
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 from pathlib import Path
@@ -38,14 +39,28 @@ def run_chat(prompt: str) -> str:
     return completion.choices[0].message.content or ""
 
 
-def run_assemble(case_path: Path, output: Path | None) -> Path:
+def run_assemble(case_path: Path, output: Path | None, cite_query: str | None) -> Path:
     from src.packet import load_case, write_packet
+    from src.retrieve import format_hits, search
 
     case = load_case(case_path)
     dest = output
     if dest is None:
         dest = Path("packets") / f"{case_path.stem}-packet.md"
-    return write_packet(case, dest)
+    extra = ""
+    if cite_query is not None:
+        query = cite_query.strip() or " ".join(c.name for c in case.conditions)
+        extra = format_hits(search(query, k=5), query)
+    return write_packet(case, dest, sources_md=extra or None)
+
+
+def run_retrieve(query: str, k: int, as_json: bool) -> str:
+    from src.retrieve import format_hits, hits_to_json, search
+
+    hits = search(query, k=k)
+    if as_json:
+        return json.dumps(hits_to_json(hits, query), indent=2)
+    return format_hits(hits, query)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -58,6 +73,21 @@ def build_parser() -> argparse.ArgumentParser:
     assemble = sub.add_parser("assemble", help="Build cover sheet + evidence index + draft narrative")
     assemble.add_argument("case", type=Path, help="Path to case JSON")
     assemble.add_argument("-o", "--output", type=Path, help="Output markdown path")
+    assemble.add_argument(
+        "--cite",
+        nargs="?",
+        const="",
+        default=None,
+        help="Append public-source excerpts. Optional query; default uses condition names.",
+    )
+
+    retrieve = sub.add_parser("retrieve", help="Search the curated public VA / CFR / VFW corpus")
+    retrieve.add_argument("query", nargs="+", help="Issue or question")
+    retrieve.add_argument("-k", type=int, default=5, help="Max sources to return")
+    retrieve.add_argument("--json", action="store_true", help="JSON instead of markdown")
+
+    refresh = sub.add_parser("refresh-corpus", help="Fetch allowlisted live pages into corpus/.cache/")
+    refresh.add_argument("--source", help="Refresh one source id from the manifest")
 
     parser.add_argument("legacy_prompt", nargs="*", help=argparse.SUPPRESS)
     return parser
@@ -69,8 +99,23 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
 
     if args.cmd == "assemble":
-        dest = run_assemble(args.case, args.output)
+        dest = run_assemble(args.case, args.output, args.cite)
         print(dest)
+        return
+    if args.cmd == "retrieve":
+        print(run_retrieve(" ".join(args.query), args.k, args.json))
+        return
+    if args.cmd == "refresh-corpus":
+        from src.retrieve import load_manifest, refresh_all, refresh_source
+
+        if args.source:
+            match = next((s for s in load_manifest() if s.id == args.source), None)
+            if not match:
+                raise SystemExit(f"Unknown source id: {args.source}")
+            print(refresh_source(match))
+            return
+        for source_id, result in refresh_all():
+            print(f"{source_id}\t{result}")
         return
     if args.cmd == "chat":
         print(run_chat(" ".join(args.prompt)))
