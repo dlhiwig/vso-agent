@@ -1,0 +1,92 @@
+{
+  "prepared_for": "Accredited VFW VSO — sample post",
+  "prepared_by": "VSO Agent (draft)",
+  "prepared_on": "2026-09-19",
+  "claim_action": "Original compensation claim; first-time filer",
+  "intake_source": "Synthetic post intake. No real veteran.",
+  "extra_notes": "MOS 13B plus artillery noise is a plausible exposure context, not a proven nexus. Do not draft a buddy statement that names people who were not asked.",
+  "veteran": {
+    "name": "Jordan Hale (synthetic)",
+    "preferred_name": "Jordan Hale",
+    "branch": "U.S. Army",
+    "component": "Active Duty",
+    "mos": "13B Cannon Crewmember",
+    "service_start": "2004",
+    "service_end": "2016",
+    "character_of_discharge": "Honorable (stated, unverified)",
+    "current_combined_rating": "none / first filing",
+    "va_file_hint": "UNKNOWN — do not store SSN here",
+    "contact": "via VFW post front desk (synthetic)",
+    "post": "Example VFW Post 0000"
+  },
+  "conditions": [
+    {
+      "name": "Bilateral tinnitus",
+      "claim_type": "original",
+      "status": "veteran-reported",
+      "onset": "during second tour; constant since",
+      "in_service_event": "veteran reports years of howitzer blast and generator noise as a 13B; two tours",
+      "current_impact": "constant ringing both ears; sleep disruption"
+    },
+    {
+      "name": "Bilateral hearing loss",
+      "claim_type": "original",
+      "status": "veteran-reported",
+      "onset": "noticed late in service; worse since discharge",
+      "in_service_event": "same noise exposure as tinnitus; no audiogram in this file",
+      "current_impact": "misses conversation, especially with background noise"
+    },
+    {
+      "name": "Bilateral knee condition",
+      "claim_type": "original",
+      "status": "hypothesized",
+      "onset": "UNKNOWN — veteran said knees are bad from the howitzer",
+      "in_service_event": "veteran attributes to gun crew physical work; no STR excerpt in this file",
+      "current_impact": "pain with stairs and prolonged standing; specifics UNKNOWN"
+    }
+  ],
+  "evidence": [
+    {
+      "title": "DD-214 Member-4 (or other separation document)",
+      "status": "missing",
+      "supports": ["all"],
+      "notes": "Required for identity, MOS, and character of discharge"
+    },
+    {
+      "title": "Service treatment records / in-service audiology",
+      "status": "requested",
+      "supports": ["Bilateral tinnitus", "Bilateral hearing loss"],
+      "source": "VA / NPRC request if veteran does not have copies"
+    },
+    {
+      "title": "Post-service audiogram",
+      "status": "missing",
+      "supports": ["Bilateral tinnitus", "Bilateral hearing loss"],
+      "notes": "Current diagnosis and Maryland CNC / puretone data if obtained privately"
+    },
+    {
+      "title": "Private or VA treatment records — knees",
+      "status": "missing",
+      "supports": ["Bilateral knee condition"],
+      "notes": "Need a current diagnosis before listing a specific knee disability on 21-526EZ"
+    },
+    {
+      "title": "Personal statement (21-4138)",
+      "status": "requested",
+      "supports": ["all"],
+      "notes": "Draft narrative in this packet is a starting point only"
+    },
+    {
+      "title": "Lay / buddy statement (21-10210)",
+      "status": "not-applicable",
+      "supports": ["Bilateral tinnitus"],
+      "notes": "Do not invent. Only use if a real witness agrees to sign."
+    },
+    {
+      "title": "Prior rating decision / benefits letter",
+      "status": "not-applicable",
+      "supports": ["all"],
+      "notes": "First-time filer per intake"
+    }
+  ]
+}
