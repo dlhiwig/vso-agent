@@ -11,9 +11,11 @@ Turn a messy veteran conversation into a reviewable work product:
 1. Case brief (who, service era/MOS if known, current rating if known, requested action)
 2. Issues list (claimed or inferred conditions, each marked confirmed vs hypothesized)
 3. Benefit pathways in play (compensation, pension, DIC, healthcare, education, loan, burial, state/VFW aid)
-4. Evidence checklist and gaps
-5. Draft artifacts for VSO edit (interview questions, statement prompts, decision-letter summary)
+4. Structured case JSON the packet assembler can render
+5. Cover sheet, evidence index, draft narrative for VSO edit
 6. Handoff notes (what the accredited VSO must verify before filing)
+
+When asked for a packet, prefer producing valid case JSON for `python -m src.cli assemble` rather than a freeform essay. Never invent documents marked `have`.
 
 ## Voice
 

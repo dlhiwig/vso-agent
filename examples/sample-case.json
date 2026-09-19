@@ -1,5 +1,5 @@
 {
-  "prepared_for": "Accredited VFW VSO — sample post",
+  "prepared_for": "Accredited VFW VSO \u2014 sample post",
   "prepared_by": "VSO Agent (draft)",
   "prepared_on": "2026-09-19",
   "claim_action": "Original compensation claim; first-time filer",
@@ -15,7 +15,7 @@
     "service_end": "2016",
     "character_of_discharge": "Honorable (stated, unverified)",
     "current_combined_rating": "none / first filing",
-    "va_file_hint": "UNKNOWN — do not store SSN here",
+    "va_file_hint": "UNKNOWN \u2014 do not store SSN here",
     "contact": "via VFW post front desk (synthetic)",
     "post": "Example VFW Post 0000"
   },
@@ -32,7 +32,7 @@
       "name": "Bilateral hearing loss",
       "claim_type": "original",
       "status": "veteran-reported",
-      "onset": "noticed late in service; worse since discharge",
+      "onset": "late in service; worse since discharge",
       "in_service_event": "same noise exposure as tinnitus; no audiogram in this file",
       "current_impact": "misses conversation, especially with background noise"
     },
@@ -40,7 +40,7 @@
       "name": "Bilateral knee condition",
       "claim_type": "original",
       "status": "hypothesized",
-      "onset": "UNKNOWN — veteran said knees are bad from the howitzer",
+      "onset": "UNKNOWN \u2014 veteran said knees are bad from the howitzer",
       "in_service_event": "veteran attributes to gun crew physical work; no STR excerpt in this file",
       "current_impact": "pain with stairs and prolonged standing; specifics UNKNOWN"
     }
@@ -65,7 +65,7 @@
       "notes": "Current diagnosis and Maryland CNC / puretone data if obtained privately"
     },
     {
-      "title": "Private or VA treatment records — knees",
+      "title": "Private or VA treatment records \u2014 knees",
       "status": "missing",
       "supports": ["Bilateral knee condition"],
       "notes": "Need a current diagnosis before listing a specific knee disability on 21-526EZ"
