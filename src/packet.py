@@ -61,7 +61,7 @@ class Veteran:
     service_end: str = "UNKNOWN"
     character_of_discharge: str = "UNKNOWN"
     current_combined_rating: str = "UNKNOWN"
-    va_file_hint: str = "UNKNOWN"  # never store a full SSN
+    va_file_hint: str = "UNKNOWN"
     contact: str = "UNKNOWN"
     post: str = "UNKNOWN"
 
@@ -74,7 +74,7 @@ class Veteran:
 class Condition:
     name: str
     claim_type: str = "original"
-    status: str = "veteran-reported"  # veteran-reported | diagnosed | hypothesized
+    status: str = "veteran-reported"
     onset: str = "UNKNOWN"
     in_service_event: str = "UNKNOWN"
     current_impact: str = "UNKNOWN"
@@ -437,13 +437,7 @@ def render_handoff(case: Case) -> str:
     for cond in case.conditions:
         flag = "CONFIRM WORDING" if cond.status != "diagnosed" else "listed as diagnosed in case file — still verify records"
         lines.append(f"- {cond.name}: {flag}")
-    lines.extend(
-        [
-            "",
-            "### Blocking items",
-            "",
-        ]
-    )
+    lines.extend(["", "### Blocking items", ""])
     blocking = [e for e in case.evidence if e.status in {"missing", "requested"}]
     if blocking:
         for item in blocking:
@@ -466,7 +460,7 @@ def render_handoff(case: Case) -> str:
     return "\n".join(lines) + "\n"
 
 
-def assemble(case: Case) -> str:
+def assemble(case: Case, sources_md: str | None = None) -> str:
     parts = [
         render_cover(case),
         render_evidence_index(case),
@@ -474,10 +468,12 @@ def assemble(case: Case) -> str:
         render_narrative(case),
         render_handoff(case),
     ]
+    if sources_md:
+        parts.append(sources_md)
     return "\n".join(parts).rstrip() + "\n"
 
 
-def write_packet(case: Case, dest: Path) -> Path:
+def write_packet(case: Case, dest: Path, sources_md: str | None = None) -> Path:
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(assemble(case), encoding="utf-8")
+    dest.write_text(assemble(case, sources_md=sources_md), encoding="utf-8")
     return dest
