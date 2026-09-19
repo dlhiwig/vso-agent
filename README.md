@@ -18,8 +18,6 @@ Help VSOs at VFW posts:
 
 ## Packet assembler
 
-Deterministic. No model required.
-
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -37,11 +35,11 @@ python -m src.cli retrieve "tinnitus hearing loss artillery MOS"
 python -m src.cli assemble examples/sample-case.json --cite
 ```
 
-Curated snapshots live in `corpus/snapshots/`. Official URLs are recorded even when the readable reprint is LII. Live refresh is allowlisted and optional (`python -m src.cli refresh-corpus`).
+See [docs/retrieval.md](docs/retrieval.md).
 
-See [docs/retrieval.md](docs/retrieval.md) and [examples/retrieval-tinnitus.md](examples/retrieval-tinnitus.md).
+## Post playbook
 
-The assembler does not fill official VA PDFs and does not submit to VA.gov, VBMS, or QuickSubmit. Every packet is headed `DRAFT — VSO REVIEW REQUIRED`.
+Appointment prep, volunteer checklist, and DSO handoff: [docs/post-playbook.md](docs/post-playbook.md).
 
 ## Hard rules
 
@@ -62,7 +60,7 @@ agents/           system prompt
 src/packet.py     cover sheet / index / narrative assembler
 src/retrieve.py   public-source search
 src/cli.py        chat + assemble + retrieve
-docs/             operating model, packet, retrieval
+docs/             operating model, packet, retrieval, post playbook
 corpus/           public VA/CFR/VFW snapshots + manifest
 examples/         synthetic case JSON, packet, retrieval sample
 ```
@@ -74,13 +72,11 @@ cp .env.example .env
 python -m src.cli chat "Veteran reports bilateral tinnitus after 12 years as a 13B. Build a VFW VSO brief."
 ```
 
-Point `VSO_AGENT_MODEL` at a local Ollama model or any OpenAI-compatible endpoint.
+## Later (not standby)
 
-## Next
+OpenClaw / MCP is a checklist item only. See [docs/later.md](docs/later.md).
 
-1. OpenClaw / MCP adapter so post VSOs can run this beside existing agent stacks.
-2. Post-level playbook: appointment prep, volunteer VSO checklist, handoff to Department Service Officer.
-3. Grow the corpus (more M21-1 public articles, 38 CFR musculoskeletal, PACT Act fact sheets).
+Still useful when you want it: grow the public corpus (more M21-1 articles, musculoskeletal schedule, PACT Act fact sheets).
 
 ## License
 
