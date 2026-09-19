@@ -32,10 +32,12 @@ How it works: [docs/packet-assembler.md](docs/packet-assembler.md)
 
 ```bash
 python -m src.cli retrieve "tinnitus hearing loss artillery MOS"
+python -m src.cli retrieve "PACT Act burn pit sinusitis"
+python -m src.cli retrieve "painful motion knee 4.59"
 python -m src.cli assemble examples/sample-case.json --cite
 ```
 
-See [docs/retrieval.md](docs/retrieval.md).
+Corpus: PACT Act / presumptives, Agent Orange additions, intent to file, 38 CFR 3.159 / 3.309 / 4.40 / 4.59 / 4.71a (knees, spine), M21-1 auditory and lay-evidence excerpts. See [docs/retrieval.md](docs/retrieval.md).
 
 ## Post playbook
 
@@ -75,8 +77,6 @@ python -m src.cli chat "Veteran reports bilateral tinnitus after 12 years as a 1
 ## Later (not standby)
 
 OpenClaw / MCP is a checklist item only. See [docs/later.md](docs/later.md).
-
-Still useful when you want it: grow the public corpus (more M21-1 articles, musculoskeletal schedule, PACT Act fact sheets).
 
 ## License
 
