@@ -1,4 +1,5 @@
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -26,7 +27,7 @@ class PacketTests(unittest.TestCase):
         self.assertIn("Bilateral knee condition", text)
         self.assertIn("hypothesized", text)
         self.assertIn("NOT FILE-READY", text)
-        self.assertNotRegex(text.lower(), r"\bssn\b")
+        self.assertIsNone(re.search(r"\b\d{3}-\d{2}-\d{4}\b", text))
 
     def test_rejects_bad_evidence_status(self) -> None:
         raw = json.loads((ROOT / "examples" / "sample-case.json").read_text(encoding="utf-8"))
