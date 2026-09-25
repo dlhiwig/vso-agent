@@ -1,2 +1,4 @@
+# Assemble and retrieve need nothing beyond Python 3.11+.
+# Chat extras:
 openai>=1.40.0
 python-dotenv>=1.0.1

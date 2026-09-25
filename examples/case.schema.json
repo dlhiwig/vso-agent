@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dlhiwig/vso-agent/examples/case.schema.json",
+  "title": "VSO Agent case file",
+  "type": "object",
+  "required": ["veteran", "conditions"],
+  "properties": {
+    "prepared_for": { "type": "string" },
+    "prepared_by": { "type": "string" },
+    "prepared_on": { "type": "string" },
+    "claim_action": { "type": "string" },
+    "intake_source": { "type": "string" },
+    "extra_notes": { "type": "string" },
+    "veteran": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "preferred_name": { "type": "string" },
+        "branch": { "type": "string" },
+        "component": { "type": "string" },
+        "mos": { "type": "string" },
+        "service_start": { "type": "string" },
+        "service_end": { "type": "string" },
+        "character_of_discharge": { "type": "string" },
+        "current_combined_rating": { "type": "string" },
+        "va_file_hint": { "type": "string" },
+        "contact": { "type": "string" },
+        "post": { "type": "string" }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "claim_type": {
+            "type": "string",
+            "enum": ["original", "increase", "new-condition", "secondary", "supplemental", "hltlr", "other"]
+          },
+          "status": { "type": "string" },
+          "onset": { "type": "string" },
+          "in_service_event": { "type": "string" },
+          "current_impact": { "type": "string" },
+          "secondary_to": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["have", "requested", "missing", "va-to-obtain", "not-applicable"]
+          },
+          "supports": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" } }
+            ]
+          },
+          "date": { "type": "string" },
+          "pages": { "type": "string" },
+          "source": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

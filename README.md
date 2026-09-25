@@ -16,15 +16,23 @@ Help VSOs at VFW posts:
 - Retrieve public VA / 38 CFR / VFW excerpts with official URLs
 - Hand that packet to the accredited VSO for review and official filing
 
-## Packet assembler
+## Install
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
+```
+
+Chat is optional: `pip install -e '.[chat]'`.
+
+## Packet assembler
+
+```bash
 python -m src.cli assemble examples/sample-case.json -o examples/packets/sample-packet.md
 ```
 
+No model required. Case shape: [examples/case.schema.json](examples/case.schema.json).  
 Rendered sample: [examples/packets/sample-packet.md](examples/packets/sample-packet.md)  
 How it works: [docs/packet-assembler.md](docs/packet-assembler.md)
 
@@ -33,15 +41,22 @@ How it works: [docs/packet-assembler.md](docs/packet-assembler.md)
 ```bash
 python -m src.cli retrieve "tinnitus hearing loss artillery MOS"
 python -m src.cli retrieve "PACT Act burn pit sinusitis"
-python -m src.cli retrieve "painful motion knee 4.59"
 python -m src.cli assemble examples/sample-case.json --cite
 ```
 
-Corpus: PACT Act / presumptives, Agent Orange additions, intent to file, 38 CFR 3.159 / 3.309 / 4.40 / 4.59 / 4.71a (knees, spine), M21-1 auditory and lay-evidence excerpts. See [docs/retrieval.md](docs/retrieval.md).
+See [docs/retrieval.md](docs/retrieval.md) and [docs/m21-1-iii-i.md](docs/m21-1-iii-i.md).
+
+## Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
 
 ## Post playbook
 
 Appointment prep, volunteer checklist, and DSO handoff: [docs/post-playbook.md](docs/post-playbook.md).
+
+How the pieces fit: [docs/architecture.md](docs/architecture.md).
 
 ## Hard rules
 
@@ -58,13 +73,12 @@ Find VFW National Veterans Service: [vfw.org](https://www.vfw.org/).
 ## Layout
 
 ```
-agents/           system prompt
-src/packet.py     cover sheet / index / narrative assembler
-src/retrieve.py   public-source search
-src/cli.py        chat + assemble + retrieve
-docs/             operating model, packet, retrieval, post playbook
-corpus/           public VA/CFR/VFW snapshots + manifest
-examples/         synthetic case JSON, packet, retrieval sample
+agents/           chat system prompt
+src/              CLI, packet assembler, retriever
+corpus/           public snapshots + manifest
+examples/         synthetic case, schema, sample packet
+tests/            stdlib unittest
+docs/             operating model, playbook, architecture
 ```
 
 ## Chat copilot (optional)

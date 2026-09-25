@@ -9,10 +9,8 @@ import os
 import sys
 from pathlib import Path
 
-from dotenv import load_dotenv
-
-ROOT = Path(__file__).resolve().parents[1]
-SYSTEM_PATH = ROOT / "agents" / "SYSTEM.md"
+from src.packet import PacketError
+from src.paths import SYSTEM_PATH
 
 
 def load_system() -> str:
@@ -20,9 +18,15 @@ def load_system() -> str:
 
 
 def run_chat(prompt: str) -> str:
-    load_dotenv()
-    from openai import OpenAI
+    try:
+        from dotenv import load_dotenv
+        from openai import OpenAI
+    except ImportError as exc:
+        raise SystemExit(
+            "Chat extras not installed. Run: pip install -e '.[chat]'"
+        ) from exc
 
+    load_dotenv()
     client = OpenAI(
         base_url=os.getenv("VSO_AGENT_BASE_URL", "http://127.0.0.1:11434/v1"),
         api_key=os.getenv("VSO_AGENT_API_KEY", "ollama"),
@@ -98,28 +102,31 @@ def main(argv: list[str] | None = None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
 
-    if args.cmd == "assemble":
-        dest = run_assemble(args.case, args.output, args.cite)
-        print(dest)
-        return
-    if args.cmd == "retrieve":
-        print(run_retrieve(" ".join(args.query), args.k, args.json))
-        return
-    if args.cmd == "refresh-corpus":
-        from src.retrieve import load_manifest, refresh_all, refresh_source
-
-        if args.source:
-            match = next((s for s in load_manifest() if s.id == args.source), None)
-            if not match:
-                raise SystemExit(f"Unknown source id: {args.source}")
-            print(refresh_source(match))
+    try:
+        if args.cmd == "assemble":
+            dest = run_assemble(args.case, args.output, args.cite)
+            print(dest)
             return
-        for source_id, result in refresh_all():
-            print(f"{source_id}\t{result}")
-        return
-    if args.cmd == "chat":
-        print(run_chat(" ".join(args.prompt)))
-        return
+        if args.cmd == "retrieve":
+            print(run_retrieve(" ".join(args.query), args.k, args.json))
+            return
+        if args.cmd == "refresh-corpus":
+            from src.retrieve import load_manifest, refresh_all, refresh_source
+
+            if args.source:
+                match = next((s for s in load_manifest() if s.id == args.source), None)
+                if not match:
+                    raise SystemExit(f"Unknown source id: {args.source}")
+                print(refresh_source(match))
+                return
+            for source_id, result in refresh_all():
+                print(f"{source_id}\t{result}")
+            return
+        if args.cmd == "chat":
+            print(run_chat(" ".join(args.prompt)))
+            return
+    except PacketError as exc:
+        raise SystemExit(f"case error: {exc}") from exc
     if args.legacy_prompt:
         print(run_chat(" ".join(args.legacy_prompt)))
         return
